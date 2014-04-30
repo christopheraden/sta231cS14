@@ -1,0 +1,151 @@
+\documentclass[12pt]{exam}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+%\usepackage{mathbold}
+\usepackage{amssymb}
+
+\newcommand{\R}{{\mathbb R}}
+
+\begin{document}
+
+\pagestyle{headandfoot} \pointname{ pts}
+\header{\bf STA231C, Spring 2014\\Prof. W. Polonik}%
+       {\bf HW \# 1\\ }%
+       {\bf due: Friday 4/11/14 by 5pm; mailbox of TA }
+\headrule \footrule
+
+%The assignments refer to problems in the textbook.\\
+
+\noindent
+{\bf Problem 1.} Let $\widehat{\theta}_n$ be an MLE based on $n$ observations such that $\sqrt{n}(\widehat{\theta}_n - \theta) \overset{\cal D}{ \to} {\cal N}(0,I^{-1}(\theta))$ as $n \to \infty$ whatever the true value of $\theta \in \Theta$. Here $I(\theta)$ denotes the Fisher information in the underlying model. Now consider an arbitrary value $\eta \in \Theta$ and define
+%
+\begin{align*}
+\widetilde{\theta}_n = 
+%
+\begin{cases}
+\eta, & \text{if }\; n^{1/4}\,|\widehat{\theta}_n - \eta| \le 1,\\
+\widehat{\theta}_n, & \text{if }\;n^{1/4}\,|\widehat{\theta}_n - \eta| > 1.
+\end{cases}
+\end{align*}
+%
+Show that 
+%
+\begin{align*}
+\sqrt{n}\,(\widetilde{\theta}_n - \theta) \overset{\cal D}{\to} 
+%
+\begin{cases} {\cal N}(0,I^{-1}(\theta)),&\text{if }\; \theta \ne \eta, \\
+{\cal N}(0,0) \overset{\text{a.s.}} {=} 0,& \text{if }\; \theta = \eta,
+\end{cases}
+%
+\end{align*}
+%
+i.e. $\widetilde{\theta}_n$ is `super-efficient'.\\
+
+\vspace*{1cm}
+
+\noindent
+{\bf Problem 2.} For a statistical model $\{f(x|\theta);\,\theta \in \Theta\}$ with $\Theta \subset {\mathbb R}^d$ open,  let $\lambda(x|\theta) = \log f(x|\theta)$ and let $I(\theta)$ denote the Fisher information matrix in this model (in one observation). For a random sample $X_1,\ldots,X_n$ from $f(x|\theta_0)$ let $\widehat{\theta}_n$ denote the MLE.  For a twice differentiable function $g:\Theta \to {\mathbb R}$ let $\ddot{g}$ denote its Hessian matrix. Suppose that
+%
+\begin{itemize}
+\item[(i)] $\widehat{\theta}_n$ is a consistent estimator of $\theta_0$;
+%
+\item[(ii)] $I(\theta_0) = -{\rm E}_{\theta_0}\big[\overset{\boldsymbol{\cdot\cdot}}{\lambda}(X_1|\theta_0)\big]$ and $I(\theta_0)$ is positive definite;
+%
+\item[(iii)] $\frac{\partial^2}{\partial \theta_j\,\partial\theta_k}\lambda(x|\theta)$ is continuous at $\theta_0$ for all $x$ and $j, k = 1,\ldots,d;$ 
+%
+\item[(iv)] There exist functions $ K_{j,k}(x),\,j,k = 1,\ldots,d$ with ${\rm E}_{\theta_0}|K_{j,k}(X_1)| < \infty$ and 
+%
+$$\big|U_{j,k}(x|\theta)\big| := \Big|\frac{\partial^2}{\partial \theta_j\,\partial\theta_k}\lambda(x|\theta)\Big|  \le K_{j,k}(x)\qquad\text{for all }\; x\;\text{and}\;\theta;$$
+%
+\item[(v)] For every $\epsilon > 0$ and all $j,k = 1,\ldots,d$ we have with ${\cal U}_{\theta_0}(\epsilon) = \{\theta: \|\theta - \theta_0\| \le \epsilon\}$ that
+%
+$$ P_{\theta_0}\Big[ \sup_{\theta \in {\cal U}_{\theta_0}(\epsilon)}\Big| \frac{1}{n}\sum_{i=1}^n\big[U_{j,k}(X_i|\theta) - {\rm E}_{\theta_0}U_{j,k}(X_i|\theta)\big]\Big| > \epsilon \Big] \to 0\qquad\text{as }\; n \to \infty. $$
+%
+\end{itemize}
+%
+Show that then
+%
+\begin{itemize}
+\item[a)] \quad $ -\frac{1}{n}\overset{\boldsymbol{\cdot\cdot}}{\lambda}_{n}({\bf X}|\widehat{\theta}_n) \to I(\theta_0)\qquad \text{in probability, as }\; n \to \infty,$
+%
+\item[b)] \quad $- n\; \big(\overset{\boldsymbol{\cdot\cdot}}{\lambda}_{n}({\bf X}|\widehat{\theta}_n)\big)^{-1} \to I^{-1}(\theta_0)\qquad \text{in probability, as }\; n \to \infty,$
+\end{itemize}
+%
+where ${\bf X} = (X_1,\ldots,X)$ and $\lambda_n({\bf X}|\theta)$ denotes the log-likelihood function. As for convergence in probability of matrices we use the Frobenius norm $\|\cdot\|_F$ which for a matrix $A = (a_{ij})$ is defined as $\|A\|^2_F = {\rm tr}(A^\prime A) = \sum_{i,j} a_{ij}^2$, i.e. a sequence of $(d\times d)$-matrices $A_n$ with random entries converges in probability to a (non-random) $(d\times d)$-matrix $A$ iff for every $\epsilon > 0$ we have that $P(\|A_n - A\|_F > \epsilon) \to 0$ as $n \to \infty$.
+
+\vspace*{1cm}
+
+\noindent
+{\bf Problem 3.} {\bf (a)} {\em (Multivariate mean value theorem)} Let $f:{\mathbb R}^d \to {\mathbb R}^k$ be differentiable derivative $\dot{f}(x)$, and assume that $
+\dot{f} (x)$ is continuous in the neighborhood ${\cal U}_{x_0}(r) = \{x \in \R^d: \|x - x_0\| < r\}$. Then the multivariate mean value theorem states that for $x\in {\cal U}_{x_0}(r)$ we have
+%
+\begin{align*}
+f(x) = f(x_0) + \int_0^1 \dot{f}\big(x_0 + t\,(x - x_0)\big)\,dt\;(x - x_0).
+\end{align*}
+%
+Verify this equality.\\
+
+\noindent
+{\bf (b)} {\em (Multivariate second order Taylor expansion)} Let $f: \R^d \to \R$ be twice differentiable with Hessian matrix $\ddot{f}(x)$ continuous in ${\cal U}_{x_0}(r) = \{x \in \R^d:\,\|x - x_0\| < r\}$ for some $r > 0$. Then, for $x \in {\cal U}_{x_0}(r)$ we have
+%
+\begin{align*}
+f(x) = f(x_0) + \dot{f}(x_0) (x - x_0) + (x - x_0)^\prime \int_0^1 \int_0^1 s\,\ddot{f}(x_0 + st\,(x- x_0)\big)\,ds\,dt\;(x - x_0).
+\end{align*}
+
+\noindent
+{\bf (c)} Show that for $d = 1$ the formula in (b) reduces to
+%
+\begin{align*}
+f(x) = f(x_0) + f^\prime(x_0) (x - x_0) + \int_{x_0}^x (x - t) f^{\prime\prime}(t)\,dt.
+\end{align*}
+%
+{\em Remark.} A generalization of the formula given in (c): If $f$ is $(k+1)$-times differentiable with $f^{(k+1)}(x)$ continuous in an open interval around $x_0$, then \\[5pt] 
+%
+\centerline{ $f(x) = f(x_0) + f^\prime(x_0) (x - x_0) + \cdots + \frac{1}{k!}f^{(k)}(x_0)(x-x_0)^k + \frac{1}{k!}\int_{x_0}^x (x - t)^k f^{(k+1)}(t)\,dt.$}
+\vspace*{1cm}
+
+\noindent
+{\bf Problem 4.} Let $X_1, X_2,\ldots$ be iid from a mixture of Gamma
+distributions with pdf
+%
+$$ f(x|\theta) = \left[(1-\theta)\,e^{-x} + \theta\,x\,e^{-x}
+\right]\;{\bf 1}\{x > 0\},$$
+%
+where $0 < \theta < 1.$
+%
+\begin{itemize}
+\item[a)] Find the method of moment estimator $\tilde{\theta}_n$ of $\theta$ and discuss the estimator (i.e. comment on whether it is a good estimator, and justify your assessments). 
+%
+\item[b)] Derive the asymptotic distribution of $\tilde{\theta}_n.$
+%
+\item[c)] Find an asymptotically efficient estimate by improving
+$\tilde{\theta}_n.$
+\end{itemize}
+
+%\vspace*{1cm}
+\noindent
+{\bf Problem 5.} Consider a statistical model $\{f(x|\theta);\,\theta \in \Theta\}$ with $\Theta \subset {\mathbb R}^d$ open. Let $\widetilde{\theta}_n \in \R^d$ be an estimator of $\theta$ with $\widetilde{\theta}_n - \theta_0 = O_P(n^{-1/2}).$ On top of the assumptions of the theorem on the asymptotic normality of the MLE (see below)  assume that the function $\theta \to I(\theta),\;\theta \in \Theta,$ is continuous in a neighborhood of $\theta_0$.  Show that the method of scoring estimator
+%
+$$\widetilde{\theta}_n^{(1)} = \widetilde{\theta}_n +  \frac{1}{n} I(\widetilde{\theta}_n)^{-1} \dot{\lambda}_n({\bf X}|\widetilde{\theta}_n)$$
+%
+is asymptotically equivalent to the MLE $\widehat{\theta}_n$, in the sense that $\widetilde{\theta}^{(1)}_n - \widehat{\theta}_n = o_P(n^{-1/2})$ (implying that the method of scoring estimator $\widetilde{\theta}_n$ has the same asymptotic distribution as the MLE, i.e. it is asymptotically efficient). Here $\lambda_n({\bf X}|\theta)$ is as in problem 2. \\
+
+\vspace*{1cm}
+\noindent
+{\em Using the notation from problem 2, the assumptions underlying the theorem on the asymptotic normality of the MLE (as discussed in STA231B) are as follows:
+%
+\begin{itemize}
+\item[(i)] The parameter space $\Theta \subset \R^d$ is open,
+%
+\item[(ii)] Second partial derivatives of $f(x|\theta)$ with respect to $\theta$ exist and are continuous for all $x$, and may be passed under the integral sign in $\int f(x|\theta)\,dx$,
+%
+\item[(iii)] There exists a function $K(x)$ such that ${\rm E}_{\theta_0}K(X_1) < \infty$ and 
+%
+$$\sup_{\theta \in {\cal U}_{\theta_0}(r)}\Big| \frac{\partial^2}{\partial \theta_j \partial \theta_k}\lambda(x|\theta)\Big| \le K(x)$$
+%
+\item[(iv)] $I(\theta_0) = -{\rm E}_{\theta_0}\big[\overset{\boldsymbol{\cdot\cdot}}{\lambda}(X_1|\theta_0)\big]$ and $I(\theta_0)$ is positive definite,
+%
+\item[(v)] $\{x:\;f(x|\theta) \ne f(x|\theta_0)\}$ has Lebesgue measure $0$ \;\;$\Rightarrow$\;\; $\theta = \theta_0$
+\end{itemize}
+}
+\end{document}
