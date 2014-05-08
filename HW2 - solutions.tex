@@ -1,5 +1,5 @@
 \documentclass[12pt]{exam}
-\usepackage{amsmath, amsfonts, amssymb}
+\usepackage{amsmath, amsfonts, amssymb, amstext, amsthm}
 
 \newcommand{\R}{{\mathbb R}}
 
@@ -15,8 +15,60 @@
 %
 %
 \section*{Problem 2}
+% %%% solution provided by Eliot Paisley
 %
-%
+We begin by first finding the Fisher information matrix for $n=1$: \newline 
+		
+		The log-likelihood for $\theta = (\theta_1, \dots, \theta_k)$ is 
+		$$l(\theta) = \log f(\underline{x}|\theta) = \log \left[\frac{n!}{N_1! \cdots N_k!}\prod_{j=1}^k\theta_j^{N_j}  \right ] \propto \sum_{j=1}^k N_j\log(\theta_j).$$  
+		
+		Taking the first and second partial derivatives with respect to $\theta_i$, we obtain:
+			
+			$$\frac{\partial }{\partial \theta_i}l(\theta) = \frac{\partial }{\partial \theta_i}\left[ \sum_{j=1}^{k-1} N_j\log(\theta_j) + N_k \log \left(1- \sum_{i=1}^{k-1}\theta_i\right) \right] = \frac{N_i}{\theta_i} - \frac{N_k}{\theta_k}, $$
+			and 
+			$$\frac{\partial^2}{\partial \theta_i \partial \theta_j}l(\theta) = \left \{\begin{array}{cc} -\frac{N_i}{\theta^2_i} - \frac{N_k}{\theta^2_k} & i = j \\ -\frac{N_k}{\theta_k^2} & i \neq j \end{array} \right. .$$
+
+				Taking expectation, we find
+				$$E\left[\frac{\partial^2}{\partial \theta_i \partial \theta_j}l(\theta) \right] = \left \{\begin{array}{cc} -\frac{n\theta_i}{\theta^2_i} - \frac{n\theta_k}{\theta^2_k} & i = j \\ -\frac{n\theta_k}{\theta_k^2} & i \neq j \end{array} \right.$$
+			Thus, the Fisher information matrix for $n=1$ has elements 
+			$$I_{i,j}(\theta) =  -E\left[\frac{\partial^2}{\partial \theta_i \partial \theta_j}l(\theta) \right] = \left \{\begin{array}{cc} \frac{1}{\theta_i} + \frac{1}{\theta_k} & i = j \\ \frac{1}{\theta_k} & i \neq j \end{array} \right. , \quad i,j = 1, \dots, k-1 .$$
+	-	
+		Additionally, we note that the MLE for $\theta_j, j=1, \dots, k-1$ is $\hat{\theta}_j = \frac{N_j}{n}$. \newline 
+		
+		Wald's test states that for $H_0: \theta = \theta_0$ vs. $H_1: \theta \neq \theta_0$ we shall reject $H_0$ if 
+		$$W_n(\theta_0) > \chi^2_r(1-\alpha),$$ where $W_n(\theta_0) = n(\hat{\theta}_n - \theta_0)^TI(\theta_0)(\hat{\theta}_n - \theta_0)$, $\hat{\theta}_n$ is the MLE, $I(\theta_0)$ has dimension $r\times r$, and $\chi^2_r(1-\alpha)$ is the $(1-\alpha)^{th}$ quantile of the chi-square distribution with $r$ degrees of freedom. Substituting in the Fisher matrix and the MLE, we arrive at Pearson's $\chi^2$-test:  
+		
+		\begin{align*}
+		W_n(\theta_0)
+		& = n \left(\begin{array}{c} \frac{N_1}{n} - \theta_{0,1} \\ \vdots \\ \frac{N_{k-1}}{n}-\theta_{0,k-1} \end{array} \right)^T 
+		\left[\begin{array}{cccc} \frac{1}{\theta_1} + \frac{1}{\theta_{0,k}} & \frac{1}{\theta_{0,k}} & \cdots & \frac{1}{\theta_{0,k}} 
+		\\ 
+		\frac{1}{\theta_{0,k}} & \frac{1}{\theta_2}+ \frac{1}{\theta_{0,k}} & \cdots & \frac{1}{\theta_{0,k}} \\
+		\vdots             &  & \ddots & \vdots \\
+		\frac{1}{\theta_{0,k}} & \frac{1}{\theta_{0,k}} & \cdots & \frac{1}{\theta_{k-1}} +\frac{1}{\theta_{0,k}} \\
+				\end{array} \right]
+		\left(\begin{array}{c} \frac{N_1}{n} - \theta_{0,1} \\ \vdots \\ \frac{N_{k-1}}{n}-\theta_{0,k-1} \end{array} \right)\\
+		& = \frac{1}{n} 
+		\left[\frac{N_1 - n\theta_{0,1}}{\theta_1} +\sum_{i=i}^{k-1}\frac{\left(N_i - n\theta_{0,i}\right)}{\theta_{0,k}}, \dots , 
+		\frac{N_{k-1} - n\theta_{0,k-1}}{\theta_{k-1}} +\sum_{i=i}^{k-1}\frac{\left(N_i - n\theta_{0,i}\right)}{\theta_{0,k}}
+		\right] \\
+		&\qquad \qquad \qquad \qquad \cdot 
+\left(\begin{array}{c} N_1 - n\theta_{0,1} \\ \vdots \\ N_{k-1}-n\theta_{0,k-1} \end{array} \right)\\
+		& = \frac{1}{n} 
+		\left[\frac{N_1 - n\theta_{0,1}}{\theta_1} +\frac{\left(n-N_k\right) - n\left(1-\theta_{0,k}\right)}{\theta_{0,k}}, \dots , 
+		\frac{N_{k-1} - n\theta_{0,k-1}}{\theta_{k-1}} +\frac{\left(n-N_k\right) - n\left(1-\theta_{0,k}\right)}{\theta_{0,k}}
+		\right] \\
+		&\qquad \qquad \qquad \qquad \cdot 
+		\left(\begin{array}{c} N_1 - n\theta_{0,1} \\ \vdots \\ N_{k-1}-n\theta_{0,k-1} \end{array} \right)\\
+		& = \frac{1}{n} 
+		\left[\frac{N_1 - n\theta_{0,1}}{\theta_1} +\frac{-N_k + n\theta_{0,k}}{\theta_{0,k}}, \dots , 
+		\frac{N_{k-1} - n\theta_{0,k-1}}{\theta_{k-1}} +\frac{-N_k + n\theta_{0,k}}{\theta_{0,k}}
+		\right] \left(\begin{array}{c} N_1 - n\theta_{0,1} \\ \vdots \\ N_{k-1}-n\theta_{0,k-1} \end{array} \right)\\
+		& = \frac{1}{n} 
+		\left[\sum_{i=1}^{k-1}\frac{\left(N_i - n\theta_{0,i}\right)^2}{\theta_i} +\left(\frac{-N_k + n\theta_{0,k}}{\theta_{0,k}}\right)\sum_{i=1}^{k-1}\left(N_i - n\theta_{0,i}\right)		\right] \\
+		& = \frac{1}{n} 
+		\left[\sum_{i=1}^{k-1}\frac{\left(N_i - n\theta_{0,i}\right)^2}{\theta_i} +\frac{\left(-N_k + n\theta_{0,k}\right)^2}{\theta_{0,k}}		\right] = \sum_{i=1}^{k}\frac{\left(N_i - n\theta_{0,i}\right)^2}{n\theta_i} \quad \qed
+		\end{align*}
 \section*{Problem 3}
 
 %
